@@ -1,3 +1,6 @@
+// Polyfills must be imported FIRST - fixes TurboModules compatibility
+import './src/polyfills';
+
 // Main App Component - FlowPonder Entry Point
 import React, { useEffect, useState } from 'react'
 import { StatusBar, Platform } from 'react-native'
