@@ -1,10 +1,13 @@
 // Entry point for FlowPonder with Expo SDK 54 compatibility
 // Critical: Import order matters for TurboModules compatibility
 
-// 1. Initialize native modules FIRST (before any React Native imports)
+// 0. CRITICAL: Load TurboModule polyfill FIRST, before any React Native imports
+import './src/turboModulePolyfill';
+
+// 1. Initialize native modules SECOND (after TurboModule polyfill)
 import './src/nativeModuleInit';
 
-// 2. Load polyfills SECOND
+// 2. Load additional polyfills THIRD
 import './src/polyfills';
 
 // 3. React Native app registration

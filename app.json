@@ -1,24 +1,27 @@
 {
-  "name": "flowponder",
-  "slug": "flowponder",
-  "version": "1.0.0",
-  "orientation": "portrait",
-  "userInterfaceStyle": "light",
-  "splash": {
-    "resizeMode": "contain",
-    "backgroundColor": "#6366f1"
-  },
-  "assetBundlePatterns": [
-    "**/*"
-  ],
-  "ios": {
-    "supportsTablet": true,
-    "bundleIdentifier": "com.flowponder.app"
-  },
-  "android": {
-    "package": "com.flowponder.app"
-  },
-  "web": {
-    "bundler": "metro"
+  "expo": {
+    "name": "flowponder",
+    "slug": "flowponder",
+    "version": "1.0.0",
+    "sdkVersion": "54.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#6366f1"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.flowponder.app"
+    },
+    "android": {
+      "package": "com.flowponder.app"
+    },
+    "web": {
+      "bundler": "metro"
+    }
   }
 }

@@ -1,8 +1,9 @@
 const { getDefaultConfig } = require('expo/metro-config');
+const path = require('path');
 
 const config = getDefaultConfig(__dirname);
 
-// Enhanced configuration for Expo SDK 49 with TurboModules support
+// Enhanced configuration for Expo SDK 54 with TurboModules support
 config.resolver = {
   ...config.resolver,
   alias: {
@@ -22,6 +23,17 @@ config.transformer = {
   // Ensure proper module resolution
   enableBabelRCLookup: false,
   hermesParser: true,
+};
+
+// CRITICAL: Inject our TurboModule polyfill as the first module in every bundle
+config.serializer = {
+  ...config.serializer,
+  getPolyfills: () => {
+    return [
+      // Our custom TurboModule polyfill gets injected first
+      path.resolve(__dirname, 'metro-polyfill.js')
+    ];
+  }
 };
 
 module.exports = config;

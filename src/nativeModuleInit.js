@@ -1,4 +1,4 @@
-// Native Module Initialization for Expo SDK 54 + React Native 0.76.4
+// Native Module Initialization for Expo SDK 54 + React Native 0.74.5
 // This handles TurboModules initialization before React Native bridge starts
 
 import { NativeModules, Platform } from 'react-native';

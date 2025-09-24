@@ -5,7 +5,7 @@
 import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 
-// TurboModule compatibility for Expo SDK 54 + RN 0.76.4
+// TurboModule compatibility for Expo SDK 54 + RN 0.74.5
 import { NativeModules, Platform } from 'react-native';
 
 // Fix TurboModuleRegistry PlatformConstants issue
