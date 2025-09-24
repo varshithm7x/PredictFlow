@@ -35,7 +35,7 @@ const CreateScreen = ({ navigation }) => {
   const { showSuccess, showError, showConfirmation } = useNotification()
 
   const categories = [
-    'Sports', 'Politics', 'Crypto', 'Entertainment', 'Technology', 
+    'Sports', 'Politics', 'Crypto', 'Entertainment', 'Technology',
     'Science', 'Economics', 'Social', 'Gaming', 'Other'
   ]
 
@@ -119,7 +119,7 @@ const CreateScreen = ({ navigation }) => {
     if (!validateForm()) return
 
     const validOptions = options.filter(option => option.trim())
-    
+
     showConfirmation(
       'Create Ponder',
       `Are you sure you want to create this ponder? It will cost 1.0 FLOW to create.`,
@@ -131,9 +131,9 @@ const CreateScreen = ({ navigation }) => {
   const createPonder = async () => {
     try {
       setIsCreating(true)
-      
+
       const validOptions = options.filter(option => option.trim())
-      
+
       const result = await flowService.createPonder({
         question: question.trim(),
         description: description.trim(),
@@ -146,7 +146,7 @@ const CreateScreen = ({ navigation }) => {
 
       if (result.success) {
         showSuccess('Ponder created successfully!')
-        
+
         // Reset form
         setQuestion('')
         setDescription('')
@@ -155,7 +155,7 @@ const CreateScreen = ({ navigation }) => {
         setDuration('24')
         setMinBet('0.50')
         setMaxBet('100.00')
-        
+
         // Navigate back to ponders screen
         navigation.navigate('Ponders')
       } else {
@@ -171,11 +171,11 @@ const CreateScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView 
+      <KeyboardAvoidingView
         style={styles.keyboardContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <ScrollView 
+        <ScrollView
           style={styles.scrollView}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -223,7 +223,7 @@ const CreateScreen = ({ navigation }) => {
             <Text style={styles.sectionDescription}>
               What are the possible outcomes?
             </Text>
-            
+
             {options.map((option, index) => (
               <View key={index} style={styles.optionContainer}>
                 <TextInput
@@ -309,7 +309,7 @@ const CreateScreen = ({ navigation }) => {
             <Text style={styles.sectionDescription}>
               Set minimum and maximum bet amounts
             </Text>
-            
+
             <View style={styles.betContainer}>
               <View style={styles.betInputContainer}>
                 <Text style={styles.betLabel}>Min Bet ($)</Text>
@@ -322,7 +322,7 @@ const CreateScreen = ({ navigation }) => {
                   keyboardType="decimal-pad"
                 />
               </View>
-              
+
               <View style={styles.betInputContainer}>
                 <Text style={styles.betLabel}>Max Bet ($)</Text>
                 <TextInput
@@ -374,7 +374,7 @@ const CreateScreen = ({ navigation }) => {
           >
             <LinearGradient
               colors={
-                isCreating || balance < 1.0 
+                isCreating || balance < 1.0
                   ? [theme.colors.gray, theme.colors.gray]
                   : [theme.colors.primary, theme.colors.primaryLight]
               }

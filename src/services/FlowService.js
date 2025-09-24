@@ -104,7 +104,7 @@ class FlowService {
 
         execute {
           let payment <- self.flowVault.withdraw(amount: 1.0)
-          
+
           let ponderId = self.ponderManager.createPonder(
             question: question,
             description: description,
@@ -115,7 +115,7 @@ class FlowService {
             category: category,
             payment: <-payment
           )
-          
+
           log("Created ponder with ID: ".concat(ponderId.toString()))
         }
       }
@@ -126,7 +126,7 @@ class FlowService {
         cadence: transaction,
         args: (arg, t) => [
           arg(question, t.String),
-          arg(description, t.String), 
+          arg(description, t.String),
           arg(options, t.Array(t.String)),
           arg(durationHours.toFixed(1), t.UFix64),
           arg(minBet.toFixed(1), t.UFix64),
@@ -169,13 +169,13 @@ class FlowService {
 
         execute {
           let payment <- self.flowVault.withdraw(amount: amount)
-          
+
           self.ponderManager.placeVote(
             ponderId: ponderId,
             option: option,
             payment: <-payment
           )
-          
+
           log("Vote placed on ponder ".concat(ponderId.toString()))
         }
       }
@@ -223,7 +223,7 @@ class FlowService {
             option: option,
             payment: nil
           )
-          
+
           log("Free vote placed on ponder ".concat(ponderId.toString()))
         }
       }
@@ -413,7 +413,7 @@ class FlowService {
         execute {
           let winnings <- self.ponderManager.withdrawWinnings(ponderId: ponderId)
           self.flowVault.deposit(from: <-winnings)
-          
+
           log("Winnings withdrawn for ponder ".concat(ponderId.toString()))
         }
       }

@@ -32,12 +32,12 @@ export const NotificationProvider = ({ children }) => {
         // Called when a remote notification is received
         onNotification: function (notification) {
           console.log('Notification received:', notification)
-          
+
           if (notification.userInteraction) {
             // User tapped on notification
             handleNotificationTap(notification)
           }
-          
+
           // Required for iOS
           notification.finish('UIBackgroundFetchResultNewData')
         },
@@ -79,7 +79,7 @@ export const NotificationProvider = ({ children }) => {
 
   const handleNotificationTap = (notification) => {
     const { data } = notification
-    
+
     if (data?.type === 'ponder_resolved') {
       // Navigate to ponder detail
       // This would use navigation service
@@ -114,10 +114,10 @@ export const NotificationProvider = ({ children }) => {
   // Notification types for FlowPonder
   const notifyPonderResolved = (ponderTitle, won, amount) => {
     const title = won ? '🎉 You Won!' : '📉 Ponder Resolved'
-    const message = won 
+    const message = won
       ? `You won $${amount.toFixed(2)} on "${ponderTitle}"!`
       : `"${ponderTitle}" has been resolved.`
-    
+
     showLocalNotification(title, message, {
       type: 'ponder_resolved',
       won,

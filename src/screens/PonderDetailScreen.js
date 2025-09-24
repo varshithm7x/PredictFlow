@@ -41,7 +41,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
     try {
       setLoading(true)
       const result = await flowService.getPonder(ponderId)
-      
+
       if (result.success && result.data) {
         setPonder(result.data)
       } else {
@@ -58,7 +58,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
 
   const loadUserVotes = async () => {
     if (!user?.addr) return
-    
+
     try {
       const result = await flowService.getUserVotes(user.addr)
       if (result.success) {
@@ -87,17 +87,17 @@ const PonderDetailScreen = ({ route, navigation }) => {
 
   const handleBetVote = () => {
     const amount = parseFloat(betAmount)
-    
+
     if (isNaN(amount) || amount < ponder.minBet) {
       showError(`Minimum bet is ${formatAmount(ponder.minBet)}`)
       return
     }
-    
+
     if (amount > ponder.maxBet) {
       showError(`Maximum bet is ${formatAmount(ponder.maxBet)}`)
       return
     }
-    
+
     if (amount > balance) {
       showError('Insufficient balance')
       return
@@ -115,9 +115,9 @@ const PonderDetailScreen = ({ route, navigation }) => {
     try {
       setIsVoting(true)
       setShowVoteModal(false)
-      
+
       const result = await flowService.placeFreeVote(ponderId, selectedOption)
-      
+
       if (result.success) {
         showSuccess('Free vote placed successfully!')
         await loadPonderDetails()
@@ -137,9 +137,9 @@ const PonderDetailScreen = ({ route, navigation }) => {
     try {
       setIsVoting(true)
       setShowVoteModal(false)
-      
+
       const result = await flowService.placeVote(ponderId, selectedOption, amount)
-      
+
       if (result.success) {
         showSuccess(`Bet of ${formatAmount(amount)} FLOW placed successfully!`)
         await loadPonderDetails()
@@ -158,10 +158,10 @@ const PonderDetailScreen = ({ route, navigation }) => {
 
   const getOptionPercentage = (optionIndex) => {
     if (!ponder.voteCounts || ponder.voteCounts.length === 0) return 0
-    
+
     const totalVotes = ponder.voteCounts.reduce((sum, count) => sum + count, 0)
     if (totalVotes === 0) return 0
-    
+
     return (ponder.voteCounts[optionIndex] / totalVotes) * 100
   }
 
@@ -218,7 +218,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
               <Text style={styles.featuredText}>FEATURED PONDER</Text>
             </LinearGradient>
           )}
-          
+
           <View style={styles.metaContainer}>
             <View style={styles.categoryContainer}>
               <Text style={styles.categoryText}>{ponder.category.toUpperCase()}</Text>
@@ -227,10 +227,10 @@ const PonderDetailScreen = ({ route, navigation }) => {
               styles.timeContainer,
               expired && styles.expiredContainer
             ]}>
-              <Icon 
-                name={expired ? "time" : "alarm"} 
-                size={16} 
-                color={expired ? theme.colors.error : theme.colors.textSecondary} 
+              <Icon
+                name={expired ? "time" : "alarm"}
+                size={16}
+                color={expired ? theme.colors.error : theme.colors.textSecondary}
               />
               <Text style={[
                 styles.timeText,
@@ -259,7 +259,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
               {formatAmount(ponder.totalPool + ponder.juiceAmount)}
             </Text>
           </View>
-          
+
           <View style={styles.poolItem}>
             <Icon name="people" size={24} color={theme.colors.primary} />
             <Text style={styles.poolLabel}>Total Votes</Text>
@@ -267,7 +267,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
               {ponder.voteCounts.reduce((sum, count) => sum + count, 0)}
             </Text>
           </View>
-          
+
           <View style={styles.poolItem}>
             <Icon name="cash" size={24} color={theme.colors.warning} />
             <Text style={styles.poolLabel}>Bet Range</Text>
@@ -283,7 +283,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
           {ponder.options.map((option, index) => {
             const percentage = getOptionPercentage(index)
             const userVote = getUserVoteForOption(index)
-            
+
             return (
               <TouchableOpacity
                 key={index}
@@ -297,7 +297,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
               >
                 <View style={styles.optionHeader}>
                   <View style={styles.optionInfo}>
-                    <View 
+                    <View
                       style={[
                         styles.optionDot,
                         { backgroundColor: getVotingColor(index, ponder.options.length) }
@@ -305,7 +305,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
                     />
                     <Text style={styles.optionText}>{option}</Text>
                   </View>
-                  
+
                   <View style={styles.optionStats}>
                     <Text style={styles.percentageText}>{percentage.toFixed(1)}%</Text>
                     <Text style={styles.votesText}>
@@ -313,10 +313,10 @@ const PonderDetailScreen = ({ route, navigation }) => {
                     </Text>
                   </View>
                 </View>
-                
+
                 {/* Progress Bar */}
                 <View style={styles.progressBarContainer}>
-                  <View 
+                  <View
                     style={[
                       styles.progressBar,
                       {
@@ -326,7 +326,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
                     ]}
                   />
                 </View>
-                
+
                 {/* User's Vote Info */}
                 {userVote && (
                   <View style={styles.userVoteContainer}>
@@ -348,7 +348,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
             {userVotes.map((vote, index) => (
               <View key={index} style={styles.myVoteCard}>
                 <View style={styles.myVoteHeader}>
-                  <View 
+                  <View
                     style={[
                       styles.optionDot,
                       { backgroundColor: getVotingColor(vote.option, ponder.options.length) }
@@ -390,13 +390,13 @@ const PonderDetailScreen = ({ route, navigation }) => {
                 <Icon name="close" size={24} color={theme.colors.textSecondary} />
               </TouchableOpacity>
             </View>
-            
+
             {selectedOption !== null && (
               <View style={styles.modalContent}>
                 <Text style={styles.selectedOptionText}>
                   Voting for: "{ponder.options[selectedOption]}"
                 </Text>
-                
+
                 <View style={styles.voteOptions}>
                   {/* Free Vote */}
                   <TouchableOpacity
@@ -409,7 +409,7 @@ const PonderDetailScreen = ({ route, navigation }) => {
                       No winnings, just for fun
                     </Text>
                   </TouchableOpacity>
-                  
+
                   {/* Bet Vote */}
                   <View style={styles.betVoteContainer}>
                     <Text style={styles.betVoteLabel}>Or place a bet:</Text>
@@ -427,11 +427,11 @@ const PonderDetailScreen = ({ route, navigation }) => {
                     <Text style={styles.balanceText}>
                       Your balance: {formatAmount(balance)} FLOW
                     </Text>
-                    
+
                     <TouchableOpacity
                       style={[
                         styles.betVoteButton,
-                        (!betAmount || parseFloat(betAmount) < ponder.minBet) && 
+                        (!betAmount || parseFloat(betAmount) < ponder.minBet) &&
                         styles.betVoteButtonDisabled
                       ]}
                       onPress={handleBetVote}

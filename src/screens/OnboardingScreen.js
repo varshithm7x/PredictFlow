@@ -62,18 +62,18 @@ const OnboardingScreen = ({ navigation }) => {
   const handleConnectWallet = async () => {
     try {
       setIsConnecting(true)
-      
+
       // Request notification permissions first
       await requestPermissions()
-      
+
       // Connect wallet
       const result = await signIn()
-      
+
       if (!result.success) {
         showError(result.error || 'Failed to connect wallet')
       }
       // Navigation will happen automatically via AuthContext
-      
+
     } catch (error) {
       console.error('Wallet connection failed:', error)
       showError('Failed to connect wallet. Please try again.')
@@ -92,7 +92,7 @@ const OnboardingScreen = ({ navigation }) => {
           <Icon name={slide.icon} size={60} color={theme.colors.white} />
         </LinearGradient>
       </View>
-      
+
       <Text style={styles.title}>{slide.title}</Text>
       <Text style={styles.subtitle}>{slide.subtitle}</Text>
       <Text style={styles.description}>{slide.description}</Text>
@@ -116,7 +116,7 @@ const OnboardingScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.background} />
-      
+
       <ScrollView
         horizontal
         pagingEnabled

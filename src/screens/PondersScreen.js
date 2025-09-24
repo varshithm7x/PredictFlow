@@ -36,7 +36,7 @@ const PondersScreen = ({ navigation }) => {
     try {
       setLoading(true)
       const result = await flowService.getActivePonders()
-      
+
       if (result.success) {
         setPonders(result.data || [])
       } else {
@@ -60,7 +60,7 @@ const PondersScreen = ({ navigation }) => {
     // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase()
-      if (!ponder.question.toLowerCase().includes(query) && 
+      if (!ponder.question.toLowerCase().includes(query) &&
           !ponder.category.toLowerCase().includes(query)) {
         return false
       }
@@ -70,7 +70,7 @@ const PondersScreen = ({ navigation }) => {
     if (filter === 'featured' && !ponder.isJuiced) {
       return false
     }
-    
+
     if (filter === 'ending-soon') {
       const now = Date.now() / 1000
       const timeLeft = ponder.endTime - now
@@ -106,7 +106,7 @@ const PondersScreen = ({ navigation }) => {
             All
           </Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={[styles.filterTab, filter === 'featured' && styles.filterTabActive]}
           onPress={() => setFilter('featured')}
@@ -115,7 +115,7 @@ const PondersScreen = ({ navigation }) => {
             🔥 Featured
           </Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={[styles.filterTab, filter === 'ending-soon' && styles.filterTabActive]}
           onPress={() => setFilter('ending-soon')}
@@ -139,13 +139,13 @@ const PondersScreen = ({ navigation }) => {
   const renderPonderCard = ({ item: ponder }) => {
     const timeLeft = formatTime(ponder.endTime)
     const isEnding = ponder.endTime - Date.now() / 1000 < 3600 // Less than 1 hour
-    
+
     return (
       <TouchableOpacity
         style={[styles.ponderCard, ponder.isJuiced && styles.featuredCard]}
-        onPress={() => navigation.navigate('PonderDetail', { 
+        onPress={() => navigation.navigate('PonderDetail', {
           ponderId: ponder.id,
-          title: ponder.question 
+          title: ponder.question
         })}
         activeOpacity={0.8}
       >
@@ -164,10 +164,10 @@ const PondersScreen = ({ navigation }) => {
             <Text style={styles.categoryText}>{ponder.category.toUpperCase()}</Text>
           </View>
           <View style={[styles.timeContainer, isEnding && styles.endingSoonContainer]}>
-            <Icon 
-              name={isEnding ? "alarm" : "time"} 
-              size={14} 
-              color={isEnding ? theme.colors.error : theme.colors.textSecondary} 
+            <Icon
+              name={isEnding ? "alarm" : "time"}
+              size={14}
+              color={isEnding ? theme.colors.error : theme.colors.textSecondary}
             />
             <Text style={[styles.timeText, isEnding && styles.endingSoonText]}>
               {timeLeft}
@@ -182,7 +182,7 @@ const PondersScreen = ({ navigation }) => {
         <View style={styles.optionsContainer}>
           {ponder.options.map((option, index) => (
             <View key={index} style={styles.optionRow}>
-              <View 
+              <View
                 style={[
                   styles.optionDot,
                   { backgroundColor: getVotingColor(index, ponder.options.length) }
@@ -203,7 +203,7 @@ const PondersScreen = ({ navigation }) => {
               {formatAmount(ponder.totalPool + ponder.juiceAmount)} pool
             </Text>
           </View>
-          
+
           <View style={styles.betRangeContainer}>
             <Text style={styles.betRangeText}>
               {formatAmount(ponder.minBet)} - {formatAmount(ponder.maxBet)}
@@ -219,7 +219,7 @@ const PondersScreen = ({ navigation }) => {
       <Icon name="trending-up-outline" size={80} color={theme.colors.textTertiary} />
       <Text style={styles.emptyTitle}>No Ponders Found</Text>
       <Text style={styles.emptyText}>
-        {searchQuery 
+        {searchQuery
           ? "Try adjusting your search terms"
           : "Be the first to create a ponder!"
         }

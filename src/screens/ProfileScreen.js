@@ -23,7 +23,7 @@ const ProfileScreen = ({ navigation }) => {
   const [userVotes, setUserVotes] = useState([])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
-  
+
   const { user, balance, signOut, updateBalance } = useAuth()
   const { showError, showConfirmation, showSuccess } = useNotification()
 
@@ -36,22 +36,22 @@ const ProfileScreen = ({ navigation }) => {
   const loadUserData = async () => {
     try {
       setLoading(true)
-      
+
       // Load user stats
       const statsResult = await flowService.getUserStats(user.addr)
       if (statsResult.success) {
         setUserStats(statsResult.data)
       }
-      
+
       // Load user votes
       const votesResult = await flowService.getUserVotes(user.addr)
       if (votesResult.success) {
         setUserVotes(votesResult.data)
       }
-      
+
       // Update balance
       await updateBalance()
-      
+
     } catch (error) {
       console.error('Load user data error:', error)
       showError('Failed to load profile data')
@@ -101,11 +101,11 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.avatarContainer}>
           <Icon name="person" size={60} color={theme.colors.white} />
         </View>
-        
+
         <Text style={styles.addressText}>
           {formatAddress(user?.addr)}
         </Text>
-        
+
         <View style={styles.balanceContainer}>
           <Icon name="wallet" size={20} color={theme.colors.white} />
           <Text style={styles.balanceText}>
@@ -129,7 +129,7 @@ const ProfileScreen = ({ navigation }) => {
     return (
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Your Stats</Text>
-        
+
         <View style={styles.statsGrid}>
           <View style={styles.statCard}>
             <Text style={styles.statValue}>
@@ -141,21 +141,21 @@ const ProfileScreen = ({ navigation }) => {
               { backgroundColor: getAccuracyColor(userStats.accuracy) }
             ]} />
           </View>
-          
+
           <View style={styles.statCard}>
             <Text style={styles.statValue}>
               {formatAmount(userStats.totalWinnings)}
             </Text>
             <Text style={styles.statLabel}>Total Winnings</Text>
           </View>
-          
+
           <View style={styles.statCard}>
             <Text style={styles.statValue}>
               {userStats.totalVotes}
             </Text>
             <Text style={styles.statLabel}>Total Votes</Text>
           </View>
-          
+
           <View style={styles.statCard}>
             <Text style={styles.statValue}>
               {formatAmount(userStats.totalStaked)}
@@ -169,8 +169,8 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.achievement}>
             <Icon name="trophy" size={24} color={theme.colors.secondary} />
             <Text style={styles.achievementText}>
-              {userStats.correctPredictions > 0 ? 
-                `${userStats.correctPredictions} Correct Predictions` : 
+              {userStats.correctPredictions > 0 ?
+                `${userStats.correctPredictions} Correct Predictions` :
                 'Make your first prediction!'
               }
             </Text>
@@ -182,7 +182,7 @@ const ProfileScreen = ({ navigation }) => {
 
   const renderRecentActivity = () => {
     const recentVotes = userVotes.slice(0, 5) // Show last 5 votes
-    
+
     if (recentVotes.length === 0) {
       return (
         <View style={styles.section}>
@@ -200,7 +200,7 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.seeAllText}>See All</Text>
           </TouchableOpacity>
         </View>
-        
+
         {recentVotes.map((vote, index) => (
           <TouchableOpacity
             key={index}
@@ -230,7 +230,7 @@ const ProfileScreen = ({ navigation }) => {
   const renderActions = () => (
     <View style={styles.section}>
       <Text style={styles.sectionTitle}>Actions</Text>
-      
+
       <TouchableOpacity
         style={styles.actionCard}
         onPress={() => navigation.navigate('Wallet')}
@@ -241,7 +241,7 @@ const ProfileScreen = ({ navigation }) => {
         </View>
         <Icon name="chevron-forward" size={20} color={theme.colors.textTertiary} />
       </TouchableOpacity>
-      
+
       <TouchableOpacity
         style={styles.actionCard}
         onPress={onRefresh}
@@ -252,7 +252,7 @@ const ProfileScreen = ({ navigation }) => {
         </View>
         <Icon name="chevron-forward" size={20} color={theme.colors.textTertiary} />
       </TouchableOpacity>
-      
+
       <TouchableOpacity
         style={[styles.actionCard, styles.signOutCard]}
         onPress={handleSignOut}
@@ -295,7 +295,7 @@ const ProfileScreen = ({ navigation }) => {
         {renderStatsSection()}
         {renderRecentActivity()}
         {renderActions()}
-        
+
         <View style={styles.bottomSpacing} />
       </ScrollView>
     </SafeAreaView>

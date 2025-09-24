@@ -21,10 +21,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Subscribe to authentication state changes
     const unsubscribe = fcl.currentUser.subscribe(setUser)
-    
+
     // Check initial auth state
     checkAuthState()
-    
+
     return () => unsubscribe()
   }, [])
 
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateBalance = async () => {
     if (!user?.addr) return
-    
+
     try {
       const result = await flowService.getFlowBalance(user.addr)
       if (result.success) {

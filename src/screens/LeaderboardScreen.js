@@ -25,7 +25,7 @@ const LeaderboardScreen = () => {
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [filter, setFilter] = useState('accuracy') // accuracy, winnings, votes
-  
+
   const { user } = useAuth()
   const { showError } = useNotification()
 
@@ -36,13 +36,13 @@ const LeaderboardScreen = () => {
   const loadLeaderboard = async () => {
     try {
       setLoading(true)
-      
+
       // Get leaderboard addresses
       const leaderboardResult = await flowService.getLeaderboard()
-      
+
       if (leaderboardResult.success) {
         const addresses = leaderboardResult.data || []
-        
+
         // Get stats for each user
         const statsPromises = addresses.map(async (address) => {
           const result = await flowService.getUserStats(address)
@@ -51,9 +51,9 @@ const LeaderboardScreen = () => {
             stats: result.success ? result.data : null
           }
         })
-        
+
         const userStatsData = await Promise.all(statsPromises)
-        
+
         // Filter out users without stats and sort
         const validUsers = userStatsData
           .filter(user => user.stats !== null)
@@ -69,16 +69,16 @@ const LeaderboardScreen = () => {
                 return 0
             }
           })
-        
+
         setLeaderboard(validUsers)
-        
+
         // Create stats lookup
         const statsLookup = {}
         validUsers.forEach(({ address, stats }) => {
           statsLookup[address] = stats
         })
         setUserStats(statsLookup)
-        
+
       } else {
         showError('Failed to load leaderboard')
       }
@@ -124,7 +124,7 @@ const LeaderboardScreen = () => {
           Accuracy
         </Text>
       </TouchableOpacity>
-      
+
       <TouchableOpacity
         style={[styles.filterTab, filter === 'winnings' && styles.filterTabActive]}
         onPress={() => setFilter('winnings')}
@@ -133,7 +133,7 @@ const LeaderboardScreen = () => {
           Winnings
         </Text>
       </TouchableOpacity>
-      
+
       <TouchableOpacity
         style={[styles.filterTab, filter === 'votes' && styles.filterTabActive]}
         onPress={() => setFilter('votes')}
@@ -150,7 +150,7 @@ const LeaderboardScreen = () => {
     const { address, stats } = item
     const rankIcon = getRankIcon(rank)
     const isCurrentUser = address === user?.addr
-    
+
     return (
       <TouchableOpacity
         style={[
@@ -170,14 +170,14 @@ const LeaderboardScreen = () => {
             style={styles.topThreeGradient}
           />
         )}
-        
+
         <View style={styles.userCardContent}>
           <View style={styles.userInfo}>
             <View style={styles.rankContainer}>
-              <Icon 
-                name={rankIcon.name} 
-                size={rank <= 3 ? 32 : 24} 
-                color={rankIcon.color} 
+              <Icon
+                name={rankIcon.name}
+                size={rank <= 3 ? 32 : 24}
+                color={rankIcon.color}
               />
               <Text style={[
                 styles.rankText,
@@ -186,7 +186,7 @@ const LeaderboardScreen = () => {
                 #{rank}
               </Text>
             </View>
-            
+
             <View style={styles.userDetails}>
               <Text style={[
                 styles.addressText,
@@ -194,7 +194,7 @@ const LeaderboardScreen = () => {
               ]}>
                 {isCurrentUser ? 'You' : formatAddress(address)}
               </Text>
-              
+
               <View style={styles.statsRow}>
                 <View style={styles.statItem}>
                   <Text style={styles.statValue}>
@@ -202,14 +202,14 @@ const LeaderboardScreen = () => {
                   </Text>
                   <Text style={styles.statLabel}>Accuracy</Text>
                 </View>
-                
+
                 <View style={styles.statItem}>
                   <Text style={styles.statValue}>
                     {formatAmount(stats.totalWinnings)}
                   </Text>
                   <Text style={styles.statLabel}>Winnings</Text>
                 </View>
-                
+
                 <View style={styles.statItem}>
                   <Text style={styles.statValue}>
                     {stats.totalVotes}
@@ -219,7 +219,7 @@ const LeaderboardScreen = () => {
               </View>
             </View>
           </View>
-          
+
           <View style={styles.primaryStat}>
             <Text style={styles.primaryStatValue}>
               {filter === 'accuracy' ? `${(stats.accuracy * 100).toFixed(1)}%` :
@@ -228,7 +228,7 @@ const LeaderboardScreen = () => {
             </Text>
           </View>
         </View>
-        
+
         {isCurrentUser && (
           <View style={styles.currentUserBadge}>
             <Text style={styles.currentUserBadgeText}>YOU</Text>

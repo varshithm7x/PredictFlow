@@ -8,7 +8,7 @@ const flowConfig = {
     testnet: 'https://rest-testnet.onflow.org',
     mainnet: 'https://rest-mainnet.onflow.org'
   },
-  
+
   // Contract addresses (will be updated after deployment)
   contracts: {
     FlowPonder: {
@@ -22,7 +22,7 @@ const flowConfig = {
       local: '0xf8d6e0586b0a20c7'
     }
   },
-  
+
   // Wallet discovery URLs
   walletDiscovery: {
     testnet: 'https://fcl-discovery.onflow.org/testnet/authn',
@@ -44,7 +44,7 @@ export const configureFlow = (network = 'testnet') => {
 
   // Apply configuration
   config(networkConfig)
-  
+
   return networkConfig
 }
 
@@ -56,7 +56,7 @@ export const getContractAddress = (contractName, network = 'testnet') => {
 // Network configuration
 export const FLOW_NETWORKS = {
   LOCAL: 'local',
-  TESTNET: 'testnet', 
+  TESTNET: 'testnet',
   MAINNET: 'mainnet'
 }
 

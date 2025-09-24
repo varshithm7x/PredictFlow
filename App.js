@@ -75,32 +75,32 @@ const TabNavigator = () => {
         headerTintColor: theme.colors.text
       })}
     >
-      <Tab.Screen 
-        name="Ponders" 
+      <Tab.Screen
+        name="Ponders"
         component={PondersScreen}
         options={{
           title: 'Discover',
           headerTitle: 'FlowPonder'
         }}
       />
-      <Tab.Screen 
-        name="Create" 
+      <Tab.Screen
+        name="Create"
         component={CreateScreen}
         options={{
           title: 'Create',
           headerTitle: 'Create Ponder'
         }}
       />
-      <Tab.Screen 
-        name="Leaderboard" 
+      <Tab.Screen
+        name="Leaderboard"
         component={LeaderboardScreen}
         options={{
           title: 'Rankings',
           headerTitle: 'Leaderboard'
         }}
       />
-      <Tab.Screen 
-        name="Profile" 
+      <Tab.Screen
+        name="Profile"
         component={ProfileScreen}
         options={{
           title: 'Profile',
@@ -186,10 +186,10 @@ const App = () => {
     try {
       // Initialize Flow service
       await flowService.initialize('testnet')
-      
+
       // Setup notifications
       // setupNotifications()
-      
+
       setIsInitialized(true)
     } catch (error) {
       console.error('Failed to initialize app:', error)
