@@ -1,11 +1,11 @@
-// Polyfill setup for React Native compatibility with Expo 49
+// Polyfill setup for React Native compatibility with Expo SDK 54
 // This file must be imported FIRST in your app entry point
 
 // Core polyfills for React Native compatibility
 import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 
-// TurboModule compatibility for Expo 49 + RN 0.72.10
+// TurboModule compatibility for Expo SDK 54 + RN 0.76.4
 import { NativeModules, Platform } from 'react-native';
 
 // Fix TurboModuleRegistry PlatformConstants issue
@@ -74,4 +74,4 @@ if (typeof process === 'undefined') {
 if (typeof __dirname === 'undefined') global.__dirname = '/';
 if (typeof __filename === 'undefined') global.__filename = '';
 
-console.log('FlowPonder Expo 49 polyfills loaded successfully with TurboModule compatibility');
+console.log('FlowPonder Expo SDK 54 polyfills loaded successfully with TurboModule compatibility');

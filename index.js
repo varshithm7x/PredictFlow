@@ -1,4 +1,4 @@
-// Entry point for FlowPonder with Expo 49 compatibility
+// Entry point for FlowPonder with Expo SDK 54 compatibility
 // Critical: Import order matters for TurboModules compatibility
 
 // 1. Initialize native modules FIRST (before any React Native imports)

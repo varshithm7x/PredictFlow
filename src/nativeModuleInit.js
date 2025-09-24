@@ -1,4 +1,4 @@
-// Native Module Initialization for Expo 49 + React Native 0.72.10
+// Native Module Initialization for Expo SDK 54 + React Native 0.76.4
 // This handles TurboModules initialization before React Native bridge starts
 
 import { NativeModules, Platform } from 'react-native';
@@ -55,7 +55,7 @@ const initializeNativeModules = () => {
           return global.__turboModuleProxy[name];
         }
 
-        console.warn(`TurboModule '${name}' not found in Expo 49 environment`);
+        console.warn(`TurboModule '${name}' not found in Expo SDK 54 environment`);
         return null;
       },
       get: (name) => {
@@ -64,7 +64,7 @@ const initializeNativeModules = () => {
     };
   }
 
-  console.log('Native modules initialized for Expo 49 compatibility');
+  console.log('Native modules initialized for Expo SDK 54 compatibility');
 };
 
 // Initialize immediately
