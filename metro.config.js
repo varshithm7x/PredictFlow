@@ -1,5 +1,6 @@
 const { getDefaultConfig } = require('expo/metro-config');
 const path = require('path');
+const fs = require('fs');
 
 const config = getDefaultConfig(__dirname);
 
@@ -25,14 +26,20 @@ config.transformer = {
   hermesParser: true,
 };
 
-// CRITICAL: Inject our TurboModule polyfill as the first module in every bundle
+// CRITICAL: Inject our TurboModule polyfill using getPolyfills
 config.serializer = {
   ...config.serializer,
   getPolyfills: () => {
-    return [
-      // Our custom TurboModule polyfill gets injected first
-      path.resolve(__dirname, 'metro-polyfill.js')
-    ];
+    try {
+      const polyfillPath = path.join(__dirname, 'metro-polyfill-bulletproof.js');
+      console.log('[FlowPonder] Returning bulletproof polyfill path for injection');
+
+      // Return the polyfill file path to be included in the bundle
+      return [polyfillPath];
+    } catch (error) {
+      console.error('[FlowPonder] Error with bulletproof polyfill path:', error);
+      return [];
+    }
   }
 };
 

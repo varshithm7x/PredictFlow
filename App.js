@@ -3,7 +3,7 @@ import './src/polyfills';
 
 // Main App Component - FlowPonder Entry Point
 import React, { useEffect, useState } from 'react'
-import { StatusBar, Platform } from 'react-native'
+import { StatusBar, Platform, View, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -118,8 +118,31 @@ const TabNavigator = () => {
 const AppNavigator = () => {
   const { user, isLoading } = useAuth()
 
+  // Show loading screen instead of null
   if (isLoading) {
-    return null // Or loading screen
+    return (
+      <View style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: theme.colors.background
+      }}>
+        <Text style={{
+          fontSize: 24,
+          fontWeight: 'bold',
+          color: theme.colors.primary,
+          marginBottom: 20
+        }}>
+          FlowPonder
+        </Text>
+        <Text style={{
+          fontSize: 16,
+          color: theme.colors.textSecondary
+        }}>
+          Connecting...
+        </Text>
+      </View>
+    )
   }
 
   return (
@@ -180,6 +203,7 @@ const AppNavigator = () => {
 // Main App Component
 const App = () => {
   const [isInitialized, setIsInitialized] = useState(false)
+  const [initError, setInitError] = useState(null)
 
   useEffect(() => {
     initializeApp()
@@ -187,22 +211,63 @@ const App = () => {
 
   const initializeApp = async () => {
     try {
+      console.log('[FlowPonder] Starting app initialization...')
+
       // Initialize Flow service
       await flowService.initialize('testnet')
+      console.log('[FlowPonder] Flow service initialized')
 
       // Setup notifications
       // setupNotifications()
 
       setIsInitialized(true)
+      console.log('[FlowPonder] App initialization complete')
     } catch (error) {
-      console.error('Failed to initialize app:', error)
-      // Could show error screen here
+      console.error('[FlowPonder] Failed to initialize app:', error)
+      setInitError(error.message)
+      // Still set initialized to true to show the app
       setIsInitialized(true)
     }
   }
 
+  // Show loading screen with proper UI instead of null
   if (!isInitialized) {
-    return null // Loading screen
+    return (
+      <SafeAreaProvider>
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: theme.colors.background
+        }}>
+          <Text style={{
+            fontSize: 24,
+            fontWeight: 'bold',
+            color: theme.colors.primary,
+            marginBottom: 20
+          }}>
+            FlowPonder
+          </Text>
+          <Text style={{
+            fontSize: 16,
+            color: theme.colors.textSecondary
+          }}>
+            Initializing...
+          </Text>
+          {initError && (
+            <Text style={{
+              fontSize: 14,
+              color: theme.colors.error,
+              marginTop: 20,
+              textAlign: 'center',
+              paddingHorizontal: 20
+            }}>
+              Error: {initError}
+            </Text>
+          )}
+        </View>
+      </SafeAreaProvider>
+    )
   }
 
   return (

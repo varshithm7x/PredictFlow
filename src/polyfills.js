@@ -5,6 +5,17 @@
 import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 
+// Fix for expo-modules-core registerWebModule issue
+if (typeof window !== 'undefined' && typeof window.expo !== 'undefined') {
+  const expoModulesCore = require('expo-modules-core');
+  if (!expoModulesCore.registerWebModule) {
+    expoModulesCore.registerWebModule = function(moduleName, moduleImplementation) {
+      console.log('[FlowPonder] Mock registerWebModule called for:', moduleName);
+      return moduleImplementation;
+    };
+  }
+}
+
 // TurboModule compatibility for Expo SDK 54 + RN 0.74.5
 import { NativeModules, Platform } from 'react-native';
 
